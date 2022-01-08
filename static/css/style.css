@@ -1,0 +1,10 @@
+#total-orders{
+    background-color:#000;
+}
+#orders-delivered{
+    background-color:blue;
+
+}
+#orders-pending{
+    background-color:brown;
+}
