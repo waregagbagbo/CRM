@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user,allowed_users,admin_only
 from .models import *
-from .forms import OrderForm,CreateUserForm
+from .forms import OrderForm,CreateUserForm,CustomerForm
 from .filters import OrderFilter
 
 
@@ -20,8 +20,16 @@ def registerPage(request):
 		if request.method == 'POST':
 			form = CreateUserForm(request.POST)
 			if form.is_valid():
-				form.save()
-				user = form.cleaned_data.get('username')
+				user = form.save()
+				username = form.cleaned_data.get('username')
+
+				group = Group.objects.get(name ='customer')
+				user.groups.add(group)
+                #automatically set a profile for a new register
+				Customer.objects.create(
+					user = user,
+				)
+
 				messages.success(request, 'Account was created for ' + user)
 
 				return redirect('login')			
@@ -133,7 +141,7 @@ def updateOrder(request, pk):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['customers'])
+#@allowed_users(allowed_roles=[])
 def profile(request):
 	customer = request.user.customer
 	form = CustomerForm(instance=customer)
