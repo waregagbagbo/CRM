@@ -1,4 +1,4 @@
-{% extends 'main.html'%}
+{% extends 'accounts/main.html'%}
 { % load static %}
 {% block content %}
 <style>
@@ -14,11 +14,11 @@
 <div class="row">
     <div class="col-md-3">
         <div class="card card-body">
-            <a class="btn btn-warning" href="{% url 'dashboard' %}">Back to Profile</a>
+            <a class="btn btn-warning" href="{% url 'profile' %}">Back to Profile</a>
             <br>
             <h3 style='text-align: center'>Account Profile</h3>
             <br>
-            <img class="profile-pic" src="{{ request.user.customer.banner.url}}">
+            <img class="profile-pic" src="{{ request.user.customer.profile_pic.url}}">
         </div>        
     </div>
     <div class="col-md-9">
